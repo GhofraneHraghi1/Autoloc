@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "vehicule")
@@ -36,4 +38,16 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
+
+    @ManyToOne
+    private Agence agence;
+
+    // LAZY : charger le véhicule ne charge pas ses maintenances
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    private Set<Maintenance> maintenances = new HashSet<>();
+
+    // LAZY, sans cascade : chargements et suppressions indépendants
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Equipement> equipements = new HashSet<>();
 }

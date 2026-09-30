@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -34,4 +36,9 @@ public class Client {
 
     @Column(nullable = false)
     private LocalDate dateInscription;
+
+
+// REMOVE : supprimer le client supprime ses réservations
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Set<Reservation> reservations = new HashSet<>();
 }

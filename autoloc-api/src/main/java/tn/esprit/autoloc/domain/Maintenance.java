@@ -24,4 +24,7 @@ public class Maintenance {
 
     @Column(length = 255)
     private String description;
+
+    @ManyToOne
+    private Vehicule vehicule;
 }
