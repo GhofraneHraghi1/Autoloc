@@ -7,12 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.CategorieVehicule;
 import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.repository.IAgenceRepository;
 import org.springframework.data.domain.Pageable;
+import tn.esprit.autoloc.service.IAgenceService;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -28,6 +30,9 @@ public class AgenceTests {
 
     @Autowired
     private IAgenceRepository fullAgenceRepository;
+
+    @Autowired
+    private IAgenceService agenceService;
 
     private void addAgence(CrudRepository<Agence, Long> repository) {
 
@@ -139,7 +144,29 @@ public class AgenceTests {
 
         fail(sb.toString());
     }
+
+
+
+    @Test
+    void createAgence() {
+        Agence agence = new Agence();
+        agence.setNom("Agence Sousse");
+        agence.setVille("Sousse");
+        agence.setAdresse("10 Avenue Habib Bourguiba");
+        agence.setTelephone("73123456");
+
+        Agence saved = agenceService.create(agence);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nAgence créée : ")
+                .append(saved.getIdAgence())
+                .append(" | ").append(saved.getNom())
+                .append(" | ").append(saved.getVille());
+
+        fail(sb.toString());
+    }
 }
 
+@Repository
 interface AgenceRepositoryMock extends CrudRepository<Agence, Long> {
 }
