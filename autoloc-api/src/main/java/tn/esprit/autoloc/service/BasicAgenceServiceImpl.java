@@ -3,7 +3,9 @@ package tn.esprit.autoloc.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.Utils;
+import tn.esprit.autoloc.calcul.VehiculeOffre;
 import tn.esprit.autoloc.domain.Agence;
+import tn.esprit.autoloc.domain.Employee; // Import à ajouter
 import tn.esprit.autoloc.exception.ResourceNotFoundException;
 import tn.esprit.autoloc.repository.IAgenceRepository;
 
@@ -18,8 +20,7 @@ public class BasicAgenceServiceImpl implements IAgenceService {
     @Override
     public boolean check(Agence agence, boolean isNew) {
         return Utils.isNotEmpty(agence.getNom())
-    && Utils.isNotEmpty(agence.getTelephone());
-
+                && Utils.isNotEmpty(agence.getTelephone());
     }
 
     @Override
@@ -70,5 +71,18 @@ public class BasicAgenceServiceImpl implements IAgenceService {
     @Override
     public boolean hasVehicules(Long id) {
         return false;
+    }
+
+    // --- MÉTHODE AJOUTÉE POUR CORRIGER L'ERREUR DE COMPILATION ---
+    @Override
+    public String simuler(Long idAgence, int nombreJours, VehiculeOffre offre) {
+        throw new UnsupportedOperationException("La méthode simuler n'est pas implémentée dans la version basique.");
+    }
+
+    // --- NOUVELLE MÉTHODE À AJOUTER (Étape 12) ---
+    @Override
+    public Agence ajouterEmployes(Long idAgence, List<Employee> employes) {
+        // Pour la version basique, on ne fait rien ou on lance une exception
+        throw new UnsupportedOperationException("La méthode ajouterEmployes n'est pas implémentée dans la version basique.");
     }
 }

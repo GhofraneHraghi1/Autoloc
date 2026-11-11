@@ -1,4 +1,5 @@
 package tn.esprit.autoloc.service;
 
-public interface ISuppressionService {
+public interface ISuppressionService<T, ID> {
+    void deleteById(ID id);
 }
