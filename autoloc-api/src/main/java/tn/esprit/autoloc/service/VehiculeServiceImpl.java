@@ -64,9 +64,9 @@ public class VehiculeServiceImpl extends GenericServiceImpl<Vehicule, Long> impl
     public double calculTarif(Long idVehicule, int nombreJours, VehiculeOffre offre) {
         Vehicule vehicule = this.findById(idVehicule);
 
-        IStrategieTarif strategie = strategies.get(offre.name());
+        IStrategieTarif strategie = strategies.get(offre.getNomStrategie());
         if (strategie == null) {
-            strategie = strategies.get("STANDARD");
+            strategie = strategies.get(VehiculeOffre.STANDARD.getNomStrategie());
         }
 
         return strategie.calculer(vehicule.getTarifJournalier().doubleValue(), nombreJours);

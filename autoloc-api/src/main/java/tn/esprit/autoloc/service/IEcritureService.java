@@ -1,6 +1,6 @@
 package tn.esprit.autoloc.service;
 
-public interface IEcritureService<T, ID> {
+public interface IEcritureService<T, K> {
     T create(T entity);
-    T update(ID id, T entity);
+    T update(K id, T entity);
 }

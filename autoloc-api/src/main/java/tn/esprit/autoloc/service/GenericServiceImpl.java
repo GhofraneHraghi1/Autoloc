@@ -5,18 +5,18 @@ import tn.esprit.autoloc.exception.ResourceNotFoundException;
 
 import java.util.List;
 
-public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID> {
+public abstract class GenericServiceImpl<T, K> implements IGenericService<T, K> {
 
-    protected final JpaRepository<T, ID> repository;
+    protected final JpaRepository<T, K> repository;
 
-    protected GenericServiceImpl(JpaRepository<T, ID> repository) {
+    protected GenericServiceImpl(JpaRepository<T, K> repository) {
         this.repository = repository;
     }
 
     // ---- méthodes abstraites propres à chaque entité ----
     protected abstract String getEntityName();
 
-    protected abstract ID getId(T entity);
+    protected abstract K getId(T entity);
 
     protected abstract void setFields(T source, T target);
 
@@ -38,7 +38,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public T findById(ID id) {
+    public T findById(K id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(getEntityName(), id.toString()));
     }
@@ -49,7 +49,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public T update(ID id, T entity) {
+    public T update(K id, T entity) {
         T existing = findById(id);
         if (!check(entity, false)) {
             throw new IllegalArgumentException("Les données de " + getEntityName() + " ne sont pas valides");
@@ -59,7 +59,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public void deleteById(ID id) {
+    public void deleteById(K id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException(getEntityName(), id.toString());
         }
@@ -67,7 +67,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public boolean hasVehicules(ID id) {
+    public boolean hasVehicules(K id) {
         return false;
     }
 }

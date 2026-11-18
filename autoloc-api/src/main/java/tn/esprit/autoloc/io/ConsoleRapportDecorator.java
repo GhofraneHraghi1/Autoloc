@@ -1,7 +1,9 @@
 package tn.esprit.autoloc.io;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component // L'annotation demandée par l'atelier
 public class ConsoleRapportDecorator implements IRapport {
 
@@ -24,9 +26,9 @@ public class ConsoleRapportDecorator implements IRapport {
         String contenu = rapport.genererRapport();
 
         // Ajout de la fonctionnalité (affichage console)
-        System.out.println("\n=== AFFICHAGE CONSOLE DU RAPPORT ===");
-        System.out.println(contenu);
-        System.out.println("====================================\n");
+        log.info("=== AFFICHAGE CONSOLE DU RAPPORT ===");
+        log.info("{}", contenu);
+        log.info("====================================");
 
         // On retourne le contenu original pour que Postman l'affiche aussi
         return contenu;
